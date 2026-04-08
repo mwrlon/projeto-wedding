@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Check-in</title>
+    <link rel="stylesheet" href="style.css" />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Jost:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
+
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  </head>
+
+  <body class="px-4 md:px-10 bg-[var(--color-background)]">
+    <!-- HEADER -->
+    <header
+      class="flex items-center justify-between w-full p-4 border-b border-amber-700/50"
+    >
+      <img src="/client/src/img/logowedding.png" class="w-28 md:w-32" />
+
+      <!-- NAV -->
+      <nav class="hidden xl:flex gap-10 text-lg">
+        <a
+          href="dashboard.html"
+          class="px-4 py-1 rounded-4xl hover:bg-[var(--color-quaternary-100)] active:bg-[var(--color-quaternary-200)] transition"
+        >
+          Dashboard
+        </a>
+        <a
+          href="convidados.html"
+          class="px-4 py-1 rounded-4xl hover:bg-[var(--color-quaternary-100)] active:bg-[var(--color-quaternary-200)] transition"
+        >
+          Convidados
+        </a>
+        <a
+          href="checkin.html"
+          class="px-4 py-1 rounded-4xl hover:bg-[var(--color-quaternary-100)] bg-[var(--color-quaternary-200)] transition"
+        >
+          Check-in
+        </a>
+      </nav>
+
+      <!-- MENU MOBILE -->
+      <img
+        src="/client/src/files/burgermenu.svg"
+        class="w-8 xl:hidden"
+        id="burgermenu"
+      />
+    </header>
+  </body>
+</html>

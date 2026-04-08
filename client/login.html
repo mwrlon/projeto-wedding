@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Jost:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  </head>
+  <body
+    class="bg-gradient-to-br from-[var(--color-primary)] via-[var(--color-secondary)] to-[var(--color-tertiary)]"
+  >
+    <div class="grid place-items-center min-h-screen backdrop-blur-lg px-4 py-8">
+      <form
+        action=""
+        method="post"
+        class="flex flex-col w-full max-w-md px-6 md:px-10 lg:px-12 py-8 md:py-12 lg:py-15 rounded-xl bg-white shadow-[var(--shadow-form)]"
+      >
+        <!-- HEADING -->
+
+        <h1 class="flex justify-center mb-10 px-4 text-3xl md:text-4xl lg:text-5xl">Wedding Pass</h1>
+
+        <!-- EMAIL -->
+
+        <label
+          for="email"
+          class="text-sm uppercase tracking-widest text-gray-500"
+          >Email</label
+        >
+        <input
+          type="email"
+          id="email"
+          name="email"
+          class="w-full py-1.5 mb-10 mt-5 border-[var(--color-secondary)] outline-none border-b-2"
+          placeholder="Digite seu email"
+          required
+        />
+
+        <!-- SENHA -->
+
+        <label
+          for="password"
+          class="text-sm uppercase tracking-widest text-gray-500"
+          >Senha</label
+        >
+        <input
+          type="password"
+          id="password"
+          name="password"
+          class="w-full py-1.5 mb-10 mt-5 border-[var(--color-secondary)] border-b-2 outline-none"
+          placeholder="Digite sua senha"
+          required
+        />
+
+        <!-- BOTAO -->
+
+        <button
+          type="submit" onclick="logarConta()"
+          class="px-6 py-3 text-xl bg-[var(--color-secondary)] rounded-2xl text-white hover:shadow-lg hover:shadow-amber-700/30 hover:scale-105 transition-all duration-300 ease-in-out cursor-pointer"
+        >
+          Entrar
+        </button>
+      </form>
+    </div>
+  </body>
+</html>

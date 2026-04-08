@@ -1,0 +1,21 @@
+:root {
+    --color-primary: #f8ede3;
+    --color-secondary: #d4a373;
+    --color-tertiary: #faedcd; 
+    --color-quaternary-100: #c98c59;
+    --color-quaternary-200: #b06f46;
+    --color-background: #fff9f2;
+    --color-background-200: #fffbf7;
+    --font-family-form: 'Jost', sans-serif;
+    --font-family-heading: 'Cormorant Garamond', serif;
+    --shadow-form: 3px 3px 100px #ffffff83;
+
+}
+
+body{
+    font-family: var(--font-family-form);
+}
+
+h1{
+    font-family: var(--font-family-heading);
+}

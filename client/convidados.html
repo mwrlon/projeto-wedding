@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Convidados</title>
+
+    <link rel="stylesheet" href="style.css" />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Jost:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
+
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  </head>
+
+  <body class="px-4 md:px-10 bg-[var(--color-background)]">
+
+    <!-- HEADER -->
+    <header class="flex items-center justify-between w-full p-4 border-b border-amber-700/50">
+
+      <img src="/client/src/img/logowedding.png" class="w-28 md:w-32" />
+
+      <!-- NAV -->
+      <nav class="hidden xl:flex gap-10 text-lg">
+        <a href="dashboard.html" class="px-4 py-1 rounded-4xl hover:bg-[var(--color-quaternary-100)] active:bg-[var(--color-quaternary-200)] transition">
+          Dashboard
+        </a>
+        <a href="convidados.html" class="px-4 py-1 rounded-4xl hover:bg-[var(--color-quaternary-100)] bg-[var(--color-quaternary-200)] transition">
+          Convidados
+        </a>
+        <a href="checkin.html" class="px-4 py-1 rounded-4xl hover:bg-[var(--color-quaternary-100)] active:bg-[var(--color-quaternary-200)] transition">
+          Check-in
+        </a>
+      </nav>
+
+      <!-- MENU MOBILE -->
+      <img
+        src="/client/src/files/burgermenu.svg"
+        class="w-8 xl:hidden"
+        id="burgermenu"
+      />
+    </header>
+
+    <!-- CONTEÚDO -->
+    <main class="mt-8 flex flex-col gap-6">
+
+      <div>
+        <h1 class="text-4xl md:text-5xl">Convidados</h1>
+        <p class="text-gray-600 md:text-md md:ml-1">
+          <span id="registrados">0</span> Convidados cadastrados
+        </p>
+      </div>
+
+      <!-- BUSCA + BOTÃO -->
+      <div class="flex flex-col md:flex-row md:items-center gap-4">
+
+        <input
+          type="search"
+          id="busca"
+          placeholder="Buscar por Nome, CPF ou E-mail..."
+          class="bg-[#fffbf7] w-full md:flex-1 p-3 italic border-2 border-transparent focus:border-[var(--color-quaternary-200)] outline-none rounded-xl"
+        />
+
+        <button
+          onclick="cadastrarNovo()"
+          class="w-full md:w-auto px-6 py-3 rounded-xl bg-[var(--color-quaternary-100)] active:bg-[var(--color-quaternary-200)] hover:scale-105  transition cursor-pointer"
+        >
+          + Novo Convidado
+        </button>
+
+      </div>
+
+      <!-- CARD -->
+      <div class="bg-[#fffbf7] rounded-2xl p-4 border border-black/20">
+
+        <div class="flex flex-col sm:flex-row sm:justify-between gap-4">
+
+          <!-- INFO -->
+          <div>
+            <p><span id="online"></span> Nome da pessoa</p>
+            <p class="text-sm text-gray-600">
+              Mesa <span id="mesa">0</span> |
+              <span id="cpf">000.000.000-00</span>
+            </p>
+          </div>
+
+          <!-- AÇÕES -->
+          <div class="flex gap-4 text-xl sm:items-start items-center">
+            <span id="esta-confirmado"><img src="/client/src/files/confirmar.png" alt="Confirmar" class="w-6 h-auto"></span>
+            <button onclick="editar()" class="cursor-pointer hover:scale-105 transition"><img src="/client//src/files/editar.png" alt="Botão Editar" class="w-6 h-auto"></button>
+            <button onclick="excluir()" class="cursor-pointer hover:scale-105 transition"><img src="/client/src/files/excluir.png" alt="Botão Excluir" class="w-6 h-auto"></button>
+          </div>
+
+        </div>
+
+      </div>
+
+    </main>
+
+
+
+  </body>
+</html>
