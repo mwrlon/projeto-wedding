@@ -10,6 +10,7 @@
       href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Jost:wght@300;400;500&display=swap"
       rel="stylesheet"
     />
+    <link rel="shortcut icon" href="/client/src/files/favicon.ico" type="image/x-icon">
 
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
   </head>
@@ -25,19 +26,19 @@
       <nav class="hidden xl:flex gap-10 text-lg">
         <a
           href="dashboard.html"
-          class="px-4 py-1 rounded-4xl hover:bg-[var(--color-quaternary-100)] active:bg-[var(--color-quaternary-200)] transition"
+          class="px-4 py-1 rounded-4xl hover:bg-[var(--color-quaternary-100)] hover:text-white active:bg-[var(--color-quaternary-200)] transition"
         >
           Dashboard
         </a>
         <a
           href="convidados.html"
-          class="px-4 py-1 rounded-4xl hover:bg-[var(--color-quaternary-100)] active:bg-[var(--color-quaternary-200)] transition"
+          class="px-4 py-1 rounded-4xl hover:bg-[var(--color-quaternary-100)] hover:text-white active:bg-[var(--color-quaternary-200)] transition"
         >
           Convidados
         </a>
         <a
           href="checkin.html"
-          class="px-4 py-1 rounded-4xl hover:bg-[var(--color-quaternary-100)] bg-[var(--color-quaternary-200)] transition"
+          class="px-4 py-1 rounded-4xl hover:bg-[var(--color-quaternary-100)] bg-[var(--color-quaternary-200)] text-white active:bg-[var(--color-quaternary-200)]  transition"
         >
           Check-in
         </a>
@@ -50,5 +51,45 @@
         id="burgermenu"
       />
     </header>
+
+    <!-- CONTEÚDO -->
+    <main class="mt-10 w-full flex flex-col place-items-center gap-6">
+
+      <div class="flex flex-col text-center">
+        <h1 class="text-6xl">Check-in</h1>
+        <p class=" text-gray-600 md:text-md md:ml-1">
+          Busque convidados pelo nome ou CPF
+        </p>
+      </div>
+    
+
+      <!-- BUSCA  -->
+      <div class="flex flex-col w-95 md:items-center gap-4 mt-3">
+
+        <input
+          type="search"
+          id="busca"
+          placeholder="Digite o nome ou CPF..."
+          class="flex bg-[#fffbf7] w-full p-5 md:flex-1 p-3 italic border-1 border-black/30 focus:border-[var(--color-quaternary-200)] outline-none rounded-xl"
+        />
+
+      </div>
+
+        <!-- CARD PESSOAS BUSCA -->
+
+      <div class="w-95 h-20 border-1 border-black/30 rounded-xl" id="cardbusca">
+        <div class="flex place-items-center">
+          <p></p>
+        </div>
+        <div>
+          <button
+          onclick="checkIn()"
+          class=""
+        >
+          Check-in
+        </button>
+        </div>
+      </div>
+
   </body>
 </html>

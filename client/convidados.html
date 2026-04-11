@@ -6,6 +6,7 @@
     <title>Convidados</title>
 
     <link rel="stylesheet" href="style.css" />
+    <link rel="shortcut icon" href="/client/src/files/favicon.ico" type="image/x-icon">
 
     <link
       href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Jost:wght@300;400;500&display=swap"
@@ -24,13 +25,13 @@
 
       <!-- NAV -->
       <nav class="hidden xl:flex gap-10 text-lg">
-        <a href="dashboard.html" class="px-4 py-1 rounded-4xl hover:bg-[var(--color-quaternary-100)] active:bg-[var(--color-quaternary-200)] transition">
+        <a href="dashboard.html" class="px-4 py-1 rounded-4xl hover:bg-[var(--color-quaternary-100)] hover:text-white active:bg-[var(--color-quaternary-200)] transition">
           Dashboard
         </a>
-        <a href="convidados.html" class="px-4 py-1 rounded-4xl hover:bg-[var(--color-quaternary-100)] bg-[var(--color-quaternary-200)] transition">
+        <a href="convidados.html" class="px-4 py-1 rounded-4xl hover:bg-[var(--color-quaternary-100)] text-white bg-[var(--color-quaternary-200)] active:bg-[var(--color-quaternary-200)] transition">
           Convidados
         </a>
-        <a href="checkin.html" class="px-4 py-1 rounded-4xl hover:bg-[var(--color-quaternary-100)] active:bg-[var(--color-quaternary-200)] transition">
+        <a href="checkin.html" class="px-4 py-1 rounded-4xl hover:bg-[var(--color-quaternary-100)] hover:text-white active:bg-[var(--color-quaternary-200)] transition">
           Check-in
         </a>
       </nav>
@@ -60,7 +61,7 @@
           type="search"
           id="busca"
           placeholder="Buscar por Nome, CPF ou E-mail..."
-          class="bg-[#fffbf7] w-full md:flex-1 p-3 italic border-2 border-transparent focus:border-[var(--color-quaternary-200)] outline-none rounded-xl"
+          class="bg-[#fffbf7] w-full md:flex-1 p-3 italic border-1 border-black/15 focus:border-[var(--color-quaternary-200)] outline-none rounded-xl"
         />
 
         <button
@@ -79,7 +80,7 @@
 
           <!-- INFO -->
           <div>
-            <p><span id="online"></span> Nome da pessoa</p>
+            <p id="nomepessoa"><span id="online"></span> Nome da pessoa</p>
             <p class="text-sm text-gray-600">
               Mesa <span id="mesa">0</span> |
               <span id="cpf">000.000.000-00</span>
