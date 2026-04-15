@@ -47,9 +47,19 @@
       <!-- MENU MOBILE -->
       <img
         src="/client/src/files/burgermenu.svg"
-        class="w-8 xl:hidden"
+        class="w-8 xl:hidden cursor-pointer"
         id="burgermenu"
       />
+
+        <!-- MENU DROPDOWN -->
+  <div
+    id="navlinks"
+    class="opacity-0 transition xl:hidden flex flex-col place-items-center absolute right-10 top-18 mt-2 w-54 bg-white rounded-2xl shadow-lg flex-col p-4"
+  >
+    <a href="dashboard.html" class="py-1 px-3 my-2 border-b border-amber-700/50 text-lg">Dashboard</a>
+    <a href="convidados.html" class="py-1 px-3 my-2  border-b border-amber-700/50 text-lg">Convidados</a>
+    <a href="checkin.html" class="py-1 px-3 my-2 text-white bg-[var(--color-quaternary-100)] active:bg-[var(--color-quaternary-200)] rounded-2xl text-lg">Check-in</a>
+  </div>
     </header>
 
     <!-- CONTEÚDO -->
@@ -62,9 +72,10 @@
         </p>
       </div>
     
+    
 
       <!-- BUSCA  -->
-      <div class="flex flex-col w-95 md:items-center gap-4 mt-3">
+      <div class="flex flex-col w-95 place-items-center gap-4 mt-3">
 
         <input
           type="search"
@@ -76,20 +87,29 @@
       </div>
 
         <!-- CARD PESSOAS BUSCA -->
+  <template id="cardbusca">
+      <div class="flex items-center justify-between w-full max-w-md h-20 px-4 border border-black/30 rounded-xl">
+  
+  <!-- Lado esquerdo -->
+  <div class="flex flex-col">
+    <p id="nomepessoa" class="font-medium">Nome pessoa</p>
+    <p class="text-sm text-gray-600">
+      Mesa <span id="mesa">0</span>
+    </p>
+  </div>
 
-      <div class="w-95 h-20 border-1 border-black/30 rounded-xl" id="cardbusca">
-        <div class="flex place-items-center">
-          <p></p>
-        </div>
-        <div>
-          <button
-          onclick="checkIn()"
-          class=""
-        >
-          Check-in
-        </button>
-        </div>
-      </div>
+  <!-- Lado direito -->
+  <button
+    onclick="checkIn()"
+    class="px-4 py-2 rounded-lg bg-[var(--color-quaternary-100)] active:bg-[var(--color-quaternary-200)] transition cursor-pointer"
+  >
+    Check-in
+  </button>
 
+</div>
+    </main>
+    </template>
+
+    <script src="/client/scriptcheckin.js"></script>
   </body>
 </html>

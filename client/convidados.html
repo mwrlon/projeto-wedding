@@ -39,9 +39,19 @@
       <!-- MENU MOBILE -->
       <img
         src="/client/src/files/burgermenu.svg"
-        class="w-8 xl:hidden"
+        class="w-8 xl:hidden cursor-pointer"
         id="burgermenu"
       />
+
+        <!-- MENU DROPDOWN -->
+  <div
+    id="navlinks"
+    class="opacity-0 xl:hidden flex flex-col transition place-items-center absolute right-10 top-18 mt-2 w-54 bg-white rounded-2xl shadow-lg flex-col p-4"
+  >
+    <a href="dashboard.html" class="py-1 px-3 my-2 border-b border-amber-700/50 text-lg">Dashboard</a>
+    <a href="convidados.html" class="py-1 px-3 my-2 text-white bg-[var(--color-quaternary-100)] active:bg-[var(--color-quaternary-200)] rounded-2xl text-lg">Convidados</a>
+    <a href="checkin.html" class="py-1 px-3 my-2 border-b border-amber-700/50 text-lg">Check-in</a>
+  </div>
     </header>
 
     <!-- CONTEÚDO -->
@@ -66,7 +76,7 @@
 
         <button
           onclick="cadastrarNovo()"
-          class="w-full md:w-auto px-6 py-3 rounded-xl bg-[var(--color-quaternary-100)] active:bg-[var(--color-quaternary-200)] hover:scale-105  transition cursor-pointer"
+          class="w-full md:w-auto px-6 py-3 rounded-xl bg-[var(--color-quaternary-100)] active:bg-[var(--color-quaternary-200)] hover:scale-105 text-white transition cursor-pointer"
         >
           + Novo Convidado
         </button>
@@ -74,13 +84,14 @@
       </div>
 
       <!-- CARD -->
+    <template id="cardconvidados">
       <div class="bg-[#fffbf7] rounded-2xl p-4 border border-black/20">
 
         <div class="flex flex-col sm:flex-row sm:justify-between gap-4">
 
           <!-- INFO -->
           <div>
-            <p id="nomepessoa"><span id="online"></span> Nome da pessoa</p>
+            <p id="nomepessoa">Nome da pessoa</p>
             <p class="text-sm text-gray-600">
               Mesa <span id="mesa">0</span> |
               <span id="cpf">000.000.000-00</span>
@@ -97,10 +108,8 @@
         </div>
 
       </div>
-
+    </template>
     </main>
-
-
-
+        <script src="/client/scriptconvidados.js"></script>
   </body>
 </html>

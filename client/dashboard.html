@@ -47,12 +47,23 @@
       </nav>
 
       <!-- MENU MOBILE -->
+       <button id="burgermenu">
       <img
         src="/client/src/files/burgermenu.svg"
-        class="w-8 xl:hidden"
-        id="burgermenu"
+        class="w-8 xl:hidden cursor-pointer"
       />
-    </header>
+      </button>
+
+        <!-- MENU DROPDOWN -->
+  <div
+    id="navlinks"
+    class="opacity-0 transition xl:hidden flex flex-col place-items-center absolute right-10 top-18 mt-2 w-54 bg-white rounded-2xl shadow-lg flex-col p-4"
+  >
+    <a href="dashboard.html" class="py-1 px-3 my-2 text-white bg-[var(--color-quaternary-100)] active:bg-[var(--color-quaternary-200)] rounded-2xl text-lg">Dashboard</a>
+    <a href="convidados.html" class="py-1 px-3 my-2  border-b border-amber-700/50 text-lg">Convidados</a>
+    <a href="checkin.html" class="py-1 px-3 my-2  border-b border-amber-700/50 text-lg">Check-in</a>
+  </div>
+</header>
 
     <!-- CONTEÚDO -->
     <main class="mt-8 mb-2 flex flex-col gap-6">
@@ -139,12 +150,12 @@
       </div>
     </div>
     <!-- ULTIMOS CONFIRMADOS  -->
+  <template id="cardconfirmados">
     <div class="w-full bg-[#fffbf7] rounded-2xl p-6 shadow-sm mt-20">
       <h2 class="text-lg text-gray-600 font-medium mb-4">Últimos Check-ins</h2>
 
       <div
         class="flex items-center justify-between py-3 border-b border-black/30"
-        id="cardconfirmados"
       >
         <div>
           <p class="text-base font-medium text-gray-800" id="nomepessoa">
@@ -161,6 +172,8 @@
         </div>
       </div>
     </div>
+  </template>
 
+  <script src="scriptdashboard.js"></script>
   </body>
 </html>
