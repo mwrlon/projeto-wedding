@@ -17,16 +17,15 @@
 
   <body class="px-4 md:px-10 bg-[var(--color-background)]">
     <!-- HEADER -->
-    <header
-      class="flex items-center justify-between w-full p-4 border-b border-amber-700/50"
-    >
+    <header> 
+    <div class="flex items-center justify-between w-full p-4 border-b border-amber-700/50">
       <img src="/client/src/img/logowedding.png" class="w-28 md:w-32" />
 
       <!-- NAV -->
       <nav class="hidden xl:flex gap-10 text-lg">
         <a
           href="dashboard.html"
-          class="px-4 py-1 rounded-4xl hover:bg-[var(--color-quaternary-100)] hover:text-white active:bg-[var(--color-quaternary-200)] transition"
+          class="px-4 py-1 rounded-4xl hover:bg-[var(--color-quaternary-100)] hover:text-white active:bg-[var(--color-quaternary-200)] active:bg-[var(--color-quaternary-200)] transition"
         >
           Dashboard
         </a>
@@ -38,29 +37,37 @@
         </a>
         <a
           href="checkin.html"
-          class="px-4 py-1 rounded-4xl hover:bg-[var(--color-quaternary-100)] bg-[var(--color-quaternary-200)] text-white active:bg-[var(--color-quaternary-200)]  transition"
+          class="px-4 py-1 rounded-4xl hover:bg-[var(--color-quaternary-100)] text-white bg-[var(--color-quaternary-200)] transition"
         >
           Check-in
         </a>
+        <div class="flex items-end">
+          <button class="px-4 py-1 rounded-4xl hover:bg-[var(--color-quaternary-100)] hover:text-white active:bg-[var(--color-quaternary-200)] transition cursor-pointer" id="logoutButton">Sair</button>
+        </div>
       </nav>
 
+
+
       <!-- MENU MOBILE -->
+       <button id="burgermenu">
       <img
         src="/client/src/files/burgermenu.svg"
         class="w-8 xl:hidden cursor-pointer"
-        id="burgermenu"
       />
+      </button>
+      </div>
 
         <!-- MENU DROPDOWN -->
   <div
     id="navlinks"
-    class="opacity-0 transition xl:hidden flex flex-col place-items-center absolute right-10 top-18 mt-2 w-54 bg-white rounded-2xl shadow-lg flex-col p-4"
+    class="hidden opacity-0 transition xl:hidden flex flex-col place-items-center absolute right-10 top-18 mt-2 w-54 bg-white rounded-2xl shadow-lg flex-col p-4"
   >
     <a href="dashboard.html" class="py-1 px-3 my-2 border-b border-amber-700/50 text-lg">Dashboard</a>
-    <a href="convidados.html" class="py-1 px-3 my-2  border-b border-amber-700/50 text-lg">Convidados</a>
+    <a href="convidados.html" class="py-1 px-3 my-2 border-b border-amber-700/50 text-lg">Convidados</a>
     <a href="checkin.html" class="py-1 px-3 my-2 text-white bg-[var(--color-quaternary-100)] active:bg-[var(--color-quaternary-200)] rounded-2xl text-lg">Check-in</a>
+    <button class="py-1 px-3 my-2  border-b border-amber-700/50 text-lg cursor-pointer" id="logoutButton">Sair</button>
   </div>
-    </header>
+</header>
 
     <!-- CONTEÚDO -->
     <main class="mt-10 w-full flex flex-col place-items-center gap-6">
