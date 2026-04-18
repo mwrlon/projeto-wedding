@@ -19,12 +19,12 @@
   <body class="px-4 md:px-10 bg-[var(--color-background)]">
 
     <!-- HEADER -->
-    <header> 
+    <header id="header"> 
     <div class="flex items-center justify-between w-full p-4 border-b border-amber-700/50">
       <img src="/client/src/img/logowedding.png" class="w-28 md:w-32" />
 
       <!-- NAV -->
-      <nav class="hidden xl:flex gap-10 text-lg">
+      <nav class="hidden xl:flex gap-10 text-lg" id="nav">
         <a
           href="dashboard.html"
           class="px-4 py-1 rounded-4xl hover:bg-[var(--color-quaternary-100)] hover:text-white active:bg-[var(--color-quaternary-200)] active:bg-[var(--color-quaternary-200)] transition"
@@ -72,7 +72,7 @@
 </header>
 
     <!-- CONTEÚDO -->
-    <main class="mt-8 flex flex-col gap-6">
+    <main class="mt-8 flex flex-col gap-6" id="background">
 
       <div>
         <h1 class="text-4xl md:text-5xl">Convidados</h1>
@@ -127,6 +127,90 @@
       </div>
     </template>
     </main>
+
+    <div class="hidden grid place-self-center absolute px-4 shadow-xl py-8 mt-100" id="popupCadastro">
+      <button id="fechar" class="text-xl cursor-pointer font-bold max-w-[1px] text-red-900">
+        X
+      </button>
+      <form
+        action=""
+        method="post"
+        class="flex flex-col w-full max-w-md px-6 md:px-10 lg:px-12 py-10 rounded-xl bg-white shadow-[var(--shadow-form)]"
+      >
+        <!-- HEADING -->
+
+        <h1 class="flex justify-center mb-10 px-4 text-3xl md:text-4xl lg:text-5xl">Novo Convidado</h1>
+
+        <!-- NOME -->
+
+        <label
+          for="name"
+          class="text-sm uppercase tracking-widest text-gray-500"
+          >Nome</label
+        >
+        <input
+          type="text"
+          id="name"
+          name="name"
+          class="w-full py-1.5 mb-10 mt-5 border-[var(--color-secondary)] outline-none border-b-2"
+          placeholder="Digite o nome..."
+        />
+
+        <!-- CPF -->
+
+        <label
+          for="cpf"
+          class="text-sm uppercase tracking-widest text-gray-500"
+          >CPF</label
+        >
+        <input
+          type="text"
+          id="cpf"
+          name="cpf"
+          class="w-full py-1.5 mb-10 mt-5 border-[var(--color-secondary)] border-b-2 outline-none"
+          placeholder="Digite o CPF..."
+        />
+
+        <!-- EMAIL -->
+
+        <label
+          for="email"
+          class="text-sm uppercase tracking-widest text-gray-500"
+          >EMAIL</label
+        >
+        <input
+          type="email"
+          id="email"
+          name="email"
+          class="w-full py-1.5 mb-10 mt-5 border-[var(--color-secondary)] border-b-2 outline-none"
+          placeholder="Digite o Email..."
+        />
+
+        <!-- MESA -->
+
+        <label
+          for="mesa"
+          class="text-sm uppercase tracking-widest text-gray-500"
+          >MESA</label
+        >
+        <input
+          type="number"
+          id="mesa"
+          name="mesa"
+          class="w-full py-1.5 mb-10 mt-5 border-[var(--color-secondary)] border-b-2 outline-none"
+          placeholder="Digite o número da mesa..."
+        />
+
+        <!-- BOTAO -->
+
+        <button
+          type="button" onclick="cadastrarUsuario()"
+          class="px-6 py-3 text-xl bg-[var(--color-secondary)] rounded-2xl text-white hover:shadow-lg hover:shadow-amber-700/30 hover:scale-105 transition-all duration-300 ease-in-out cursor-pointer"
+        >
+          Cadastrar
+        </button>
+      </form>
+    </div>
         <script src="/client/scriptconvidados.js"></script>
   </body>
 </html>
