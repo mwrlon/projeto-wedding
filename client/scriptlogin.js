@@ -12,6 +12,6 @@ const logarConta = () =>{
         window.location.href = "dashboard.html";
     } else{
         alert("Email ou senha incorretos. Tente novamente.");
-        return
+        return;
     }
 }

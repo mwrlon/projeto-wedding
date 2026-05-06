@@ -69,53 +69,48 @@
   </div>
 </header>
 
-    <!-- CONTEÚDO -->
-    <main class="mt-10 w-full flex flex-col place-items-center gap-6">
+<!-- CONTEÚDO -->
+<main class="mt-10 w-full flex flex-col place-items-center gap-6">
 
-      <div class="flex flex-col text-center">
-        <h1 class="text-6xl">Check-in</h1>
-        <p class=" text-gray-600 md:text-md md:ml-1">
-          Busque convidados pelo nome ou CPF
-        </p>
-      </div>
-    
-    
-
-      <!-- BUSCA  -->
-      <div class="flex flex-col w-95 place-items-center gap-4 mt-3">
-
-        <input
-          type="search"
-          id="busca"
-          placeholder="Digite o nome ou CPF..."
-          class="flex bg-[#fffbf7] w-full p-5 md:flex-1 p-3 italic border-1 border-black/30 focus:border-[var(--color-quaternary-200)] outline-none rounded-xl"
-        />
-
-      </div>
-
-        <!-- CARD PESSOAS BUSCA -->
-  <template id="cardbusca">
-      <div class="flex items-center justify-between w-full max-w-md h-20 px-4 border border-black/30 rounded-xl">
-  
-  <!-- Lado esquerdo -->
-  <div class="flex flex-col">
-    <p id="nomepessoa" class="font-medium">Nome pessoa</p>
-    <p class="text-sm text-gray-600">
-      Mesa <span id="mesa">0</span>
+  <div class="flex flex-col text-center">
+    <h1 class="text-6xl">Check-in</h1>
+    <p class="text-gray-600">
+      Busque convidados pelo nome ou CPF
     </p>
   </div>
 
-  <!-- Lado direito -->
-  <button
-    onclick="checkIn()"
-    class="px-4 py-2 rounded-lg bg-[var(--color-quaternary-100)] active:bg-[var(--color-quaternary-200)] transition cursor-pointer"
-  >
-    Check-in
-  </button>
+  <!-- BUSCA -->
+  <div class="flex flex-col w-95 place-items-center gap-4 mt-3">
+    <input
+      type="search"
+      id="busca"
+      placeholder="Digite o nome ou CPF..."
+      class="bg-[#fffbf7] w-full p-5 italic border border-black/30 focus:border-[var(--color-quaternary-200)] outline-none rounded-xl"
+    />
+  </div>
 
-</div>
-    </main>
-    </template>
+  <!-- 🔥 LISTA DE RESULTADOS -->
+  <div id="listaBusca" class="flex flex-col gap-4 w-full max-w-md"></div>
+
+</main>
+
+<!-- TEMPLATE FORA DO MAIN -->
+<template id="cardbusca">
+  <div class="flex items-center justify-between w-full h-20 px-4 border border-black/30 rounded-xl">
+
+    <div class="flex flex-col">
+      <p class="nomepessoa font-medium">Nome pessoa</p>
+      <p class="text-sm text-gray-600">
+        Mesa <span class="mesa">0</span>
+      </p>
+    </div>
+
+    <button class="px-4 py-2 rounded-lg bg-[var(--color-quaternary-100)] cursor-pointer">
+      Check-in
+    </button>
+
+  </div>
+</template>
 
     <script src="/client/scriptcheckin.js"></script>
   </body>
