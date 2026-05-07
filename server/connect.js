@@ -9,10 +9,4 @@ const db = knex({
     }
 });
 
-async function listarConvidados() {
-  return await db('convidados').select('*');
-}
-
-module.exports = {
-  listarConvidados
-};
+module.exports = db

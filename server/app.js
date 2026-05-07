@@ -1,12 +1,10 @@
+import express from 'express';
 const express = require('express');
 const app = express();
-
-const convidadoRoutes = require('./routes/convidadosRoutes');
+const db = require('./connect');
 
 app.use(express.json());
 
-app.use(convidadoRoutes);
-
 app.listen(3000, () => {
-  console.log('Servidor rodando');
-});
+  console.log("Servidor rodando na porta 3000");
+})

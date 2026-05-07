@@ -2,9 +2,10 @@
 const burgermenu = document.querySelector("#burgermenu");
 const navlinks = document.querySelector("#navlinks");
 
-burgermenu.onclick = () => {
-  navlinks.classList.toggle("hidden");
-};
+burgermenu.addEventListener("click", () => {
+    navlinks.classList.toggle("hidden");
+    navlinks.classList.toggle("opacity-100");
+});
 
 // LOGOUT
 const logoutButtons = document.querySelectorAll("#logoutButton");

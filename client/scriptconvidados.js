@@ -1,10 +1,11 @@
 // MENU
-let burgermenu = document.getElementById("burgermenu");
-let navlinks = document.getElementById("navlinks");
+const burgermenu = document.getElementById("burgermenu");
+const navlinks = document.querySelector("#navlinks");
 
-burgermenu.onclick = () => {
-  navlinks.classList.toggle("hidden");
-};
+burgermenu.addEventListener("click", () => {
+    navlinks.classList.toggle("hidden");
+    navlinks.classList.toggle("opacity-100");
+});
 
 // LOGOUT
 document.querySelectorAll("#logoutButton").forEach((botao) => {
