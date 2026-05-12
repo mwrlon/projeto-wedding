@@ -16,12 +16,11 @@ document.querySelectorAll("#logoutButton").forEach((botao) => {
   };
 });
 
-// ======================
+
 // CHECK-IN
-// ======================
 
 let lista = document.getElementById("listaBusca");
-let template = document.getElementById("cardbusca");
+let template = document.getElementById("cardBusca");
 let busca = document.getElementById("busca");
 
 let convidados = [];
@@ -33,8 +32,8 @@ const mostrarConvidados = (listaConvidados) => {
   listaConvidados.forEach((pessoa) => {
     let clone = template.content.cloneNode(true);
 
-    clone.querySelector(".nomepessoa").innerText = pessoa.nome;
-    clone.querySelector(".mesa").innerText = pessoa.mesa;
+    clone.querySelector("#nomepessoa").innerText = pessoa.nome;
+    clone.querySelector("#mesa").innerText = pessoa.mesa;
 
     clone.querySelector("button").onclick = () => {
       alert("Check-in realizado!");
@@ -48,7 +47,6 @@ const mostrarConvidados = (listaConvidados) => {
 busca.oninput = () => {
   let valor = busca.value.toLowerCase();
 
-  // se estiver vazio
   if (valor === "") {
     lista.innerHTML = "";
     return;

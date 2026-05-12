@@ -33,37 +33,65 @@ document.getElementById("fechar").onclick = () => {
   header.classList.remove("blur-sm");
 };
 
-// =====================
-// CONVIDADOS
-// =====================
-
-let lista = document.getElementById("listaConvidados");
-let busca = document.getElementById("busca");
-
-let convidados = [
-  { nome: "João", cpf: "123", email: "joao@email.com", mesa: 1 },
-  { nome: "Maria", cpf: "456", email: "maria@email.com", mesa: 2 }
-];
-
 // MOSTRAR CONVIDADOS
-function mostrar(listaConvidados = convidados) {
-  lista.innerHTML = "";
 
-  listaConvidados.forEach((c) => {
-    lista.innerHTML += `
-      <div class="card">
-        <h2>${c.nome}</h2>
-        <p>CPF: ${c.cpf}</p>
-        <p>Mesa: ${c.mesa}</p>
+const apiUrl = 'http://localhost:3000/api/guests';
+const listaContainer = document.getElementById("lista");
+
+async function carregarConvidados() {
+  try {
+    const response = await fetch(apiUrl);
+    const convidados = await response.json();
+    mostrar(convidados);
+  } catch (error) {
+    console.error("Erro ao carregar:", error);
+    listaContainer.innerHTML = "<p>Erro ao carregar convidados.</p>";
+  }
+}
+
+const mostrar = (convidados) => {
+  listaContainer.innerHTML = "";
+  
+  let htmlGerado = "";
+
+  convidados.forEach((c) => {
+    htmlGerado += `
+    <div class="card-item">
+      <div class="bg-[#fffbf7] rounded-2xl p-4 border border-black/20">
+        <div class="flex flex-col sm:flex-row sm:justify-between gap-4">
+          <div>
+            <p class="text-lg font-semibold">${c.nome}</p>
+            <p class="text-sm text-gray-600">
+              Mesa <span>${c.mesa}</span> |
+              <span>${c.cpf}</span>
+            </p>
+          </div>
+
+          <div class="flex gap-4 text-xl sm:items-start items-center">
+            <button onclick="editar(${c.id})" class="cursor-pointer hover:scale-110 transition">
+                <img src="/client/src/files/editar.png" alt="Botão Editar" class="w-6 h-auto">
+            </button>
+            <button onclick="excluir(${c.id})" class="cursor-pointer hover:scale-110 transition">
+                <img src="/client/src/files/excluir.png" alt="Botão Excluir" class="w-6 h-auto">
+            </button>
+          </div>
+        </div>
       </div>
+    </div>
     `;
   });
 
+  listaContainer.innerHTML = htmlGerado;
+
+  // Atualiza o contador lá em cima no seu HTML
   document.getElementById("registrados").innerText = convidados.length;
 }
 
+// Chama a função ao abrir a página
+carregarConvidados();
+
 // CADASTRAR
-function cadastrarUsuario() {
+const cadastrarUsuario = async () => {
   let nome = document.getElementById("name").value;
   let cpf = document.getElementById("cpf").value;
   let email = document.getElementById("email").value;
@@ -74,14 +102,43 @@ function cadastrarUsuario() {
     return;
   }
 
-  convidados.push({ nome, cpf, email, mesa });
+  // Criamos o objeto com os dados
+  const novoConvidado = { nome, cpf, email, mesa };
 
-  mostrar();
+  try {
+    // Usamos 'await' para esperar o servidor responder
+    const response = await fetch(apiUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(novoConvidado)
+    });
+      if (response.ok) {
+        alert("Convidado cadastrado com sucesso!");
+        
+        // Limpa os campos do formulário
+        document.getElementById("name").value = "";
+        document.getElementById("cpf").value = "";
+        document.getElementById("email").value = "";
+        document.getElementById("mesa").value = "";
+
+        carregarConvidados(); // Atualiza a lista na tela
+        fecharPopup();        // Fecha o modal
+      } else {
+        const erro = await response.json();
+        alert("Erro ao cadastrar: " + (erro.error || "Erro desconhecido"));
+      }
+    } catch (error) {
+        document.getElementById("name").value = "";
+        document.getElementById("cpf").value = "";
+        document.getElementById("email").value = "";
+        document.getElementById("mesa").value = "";
+      }
+    };
 
   popup.classList.add("hidden");
   background.classList.remove("blur-sm");
   header.classList.remove("blur-sm");
-}
+
 
 // BUSCA
 busca.oninput = () => {
@@ -94,5 +151,3 @@ busca.oninput = () => {
   mostrar(filtrados);
 };
 
-// INICIAR
-mostrar();

@@ -101,31 +101,11 @@
       </div>
 
       <!-- CARD -->
-    <template id="cardconvidados">
-      <div class="bg-[#fffbf7] rounded-2xl p-4 border border-black/20">
 
-        <div class="flex flex-col sm:flex-row sm:justify-between gap-4">
+<div id="lista" class="flex flex-col gap-4">
+  <p class="text-center text-gray-500 italic">Carregando convidados...</p>
+</div>
 
-          <!-- INFO -->
-          <div>
-            <p id="nomepessoa">Nome da pessoa</p>
-            <p class="text-sm text-gray-600">
-              Mesa <span id="mesa">0</span> |
-              <span id="cpf">000.000.000-00</span>
-            </p>
-          </div>
-
-          <!-- AÇÕES -->
-          <div class="flex gap-4 text-xl sm:items-start items-center">
-            <span id="esta-confirmado"><img src="/client/src/files/confirmar.png" alt="Confirmar" class="w-6 h-auto"></span>
-            <button onclick="editar()" class="cursor-pointer hover:scale-105 transition"><img src="/client//src/files/editar.png" alt="Botão Editar" class="w-6 h-auto"></button>
-            <button onclick="excluir()" class="cursor-pointer hover:scale-105 transition"><img src="/client/src/files/excluir.png" alt="Botão Excluir" class="w-6 h-auto"></button>
-          </div>
-
-        </div>
-
-      </div>
-    </template>
     </main>
 
  <!-- POP-UP -->
@@ -213,6 +193,6 @@
         </button>
       </form>
     </div>
-        <script src="/client/scriptconvidados.js"></script>
+        <script src="scriptconvidados.js"></script>
   </body>
 </html>

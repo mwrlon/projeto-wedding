@@ -1,17 +1,26 @@
-const logarConta = () =>{
-    let email = document.getElementById("email").value;
-    let password = document.getElementById("password").value;
+const apiUrl = 'http://localhost:3000/api/login';
 
-    if (email === "" || password === ""){
-        alert("Por favor, preencha todos os campos.");
-        return;
-    }
+const logarConta = async() => {
+    const emailInput = document.getElementById("email").value;
+    const passwordInput = document.getElementById("password").value;
 
-    if (email == "admin@wedding.com" && password == "admin123"){
-        alert("Login bem-sucedido!");
-        window.location.href = "dashboard.html";
-    } else{
-        alert("Email ou senha incorretos. Tente novamente.");
-        return;
+    try {
+        const response = await fetch(apiUrl, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email: emailInput, senha: passwordInput })
+        });
+
+        const data = await response.json();
+
+        if (response.ok && data.success) {
+            alert("Login bem-sucedido!");
+            window.location.href = "dashboard.html";
+        } else {
+            alert(data.message || "Erro ao fazer login.");
+        }
+    } catch (error) {
+        console.error("Erro na requisição:", error);
+        alert("Erro ao conectar com o servidor.");
     }
 }
