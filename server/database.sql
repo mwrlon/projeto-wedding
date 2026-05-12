@@ -1,0 +1,64 @@
+CREATE DATABASE IF NOT EXISTS wedding_pass;
+USE wedding_pass;
+
+CREATE TABLE usuarios (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  email VARCHAR(100) UNIQUE NOT NULL,
+  senha VARCHAR(255) NOT NULL,
+  criado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE convidados (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  nome VARCHAR(100) NOT NULL,
+  cpf VARCHAR(14) UNIQUE NOT NULL,
+  email VARCHAR(100) NOT NULL UNIQUE,
+  mesa INT NOT NULL,
+  status ENUM('pendente', 'confirmado') DEFAULT 'pendente',
+  criado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  atualizado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+CREATE TABLE checkins (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  convidado_id INT NOT NULL,
+  checkin_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (convidado_id) REFERENCES convidados(id) ON DELETE CASCADE
+);
+
+
+INSERT INTO usuarios (email, senha) VALUES 
+('admin@email.com', 'admin123'),
+('cerimonialista@email.com', 'cerimonial123');
+
+INSERT INTO convidados (nome, cpf, email, mesa) VALUES 
+('Ana Silva', '111.111.111-01', 'ana.silva@email.com', 1),
+('Bruno Oliveira', '222.222.222-02', 'bruno.o@email.com', 1),
+('Carla Souza', '333.333.333-03', 'carla.souza@email.com', 2),
+('Diego Lima', '444.444.444-04', 'diego.lima@email.com', 2),
+('Elena Santos', '555.555.555-05', 'elena.s@email.com', 3),
+('Fabio Junior', '666.666.666-06', 'fabio.j@email.com', 3),
+('Gisele Bündchen', '777.777.777-07', 'gisele.b@email.com', 4),
+('Hugo Rocha', '888.888.888-08', 'hugo.rocha@email.com', 4),
+('Iara Martins', '999.999.999-09', 'iara.m@email.com', 5),
+('João Pedro', '000.000.000-10', 'joao.p@email.com', 5),
+('Katia Abreu', '121.121.121-11', 'katia.a@email.com', 6),
+('Leonardo Costa', '131.131.131-12', 'leo.costa@email.com', 6),
+('Marina Ruy', '141.141.141-13', 'marina.r@email.com', 7),
+('Natan Alvares', '151.151.151-14', 'natan.a@email.com', 7),
+('Olivia Palito', '161.161.161-15', 'olivia.p@email.com', 8),
+('Paulo Muzy', '171.171.171-16', 'paulo.m@email.com', 8),
+('Quenia Rosa', '181.181.181-17', 'quenia.r@email.com', 9),
+('Ricardo Eletro', '191.191.191-18', 'ricardo.e@email.com', 9),
+('Sandra Bullock', '202.202.202-19', 'sandra.b@email.com', 10),
+('Tiago Leifert', '212.212.212-20', 'tiago.l@email.com', 10),
+('Ursula Corbero', '222.333.444-21', 'ursula.c@email.com', 11),
+('Vitor Kley', '232.232.232-22', 'vitor.k@email.com', 11),
+('Wagner Moura', '242.242.242-23', 'wagner.m@email.com', 12),
+('Xuxa Meneghel', '252.252.252-24', 'xuxa.m@email.com', 12),
+('Yuri Alberto', '262.262.262-25', 'yuri.a@email.com', 13),
+('Zeca Pagodinho', '272.272.272-26', 'zeca.p@email.com', 13),
+('Arthur Aguiar', '282.282.282-27', 'arthur.a@email.com', 14),
+('Beatriz Reis', '292.292.292-28', 'beatriz.r@email.com', 14),
+('Caio Castro', '303.303.303-29', 'caio.c@email.com', 15),
+('Deborah Secco', '313.313.313-30', 'deborah.s@email.com', 15);
