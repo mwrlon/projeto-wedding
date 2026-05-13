@@ -9,35 +9,70 @@ burgermenu.addEventListener("click", () => {
 
 // LOGOUT
 document.querySelectorAll("#logoutButton").forEach((botao) => {
-  botao.onclick = () => {
-    if (confirm("Tem certeza de que deseja sair?")) {
-      window.location.href = "login.html";
-    }
-  };
+    botao.onclick = () => {
+        if (confirm("Tem certeza de que deseja sair?")) {
+            window.location.href = "login.html";
+        }
+    };
 });
 
-
 // CHECK-IN
+const lista = document.getElementById("listaBusca");
+const template = document.getElementById("cardBusca");
+const busca = document.getElementById("busca");
 
-let lista = document.getElementById("listaBusca");
-let template = document.getElementById("cardBusca");
-let busca = document.getElementById("busca");
+const apiUrl = 'http://localhost:3000/api/guests';
+let convidados = []; // Começa vazio e será preenchido pela API
 
-let convidados = [];
+// --- NOVO: Função para buscar convidados do Banco de Dados ---
+async function carregarConvidados() {
+    try {
+        const response = await fetch(apiUrl);
+        convidados = await response.json();
+        console.log("Dados carregados:", convidados);
+    } catch (error) {
+        console.error("Erro ao carregar convidados:", error);
+    }
+}
 
-// MOSTRAR CONVIDADOS
 const mostrarConvidados = (listaConvidados) => {
   lista.innerHTML = "";
 
-  listaConvidados.forEach((pessoa) => {
+  listaConvidados.forEach((nomePessoa) => {
     let clone = template.content.cloneNode(true);
 
-    clone.querySelector("#nomepessoa").innerText = pessoa.nome;
-    clone.querySelector("#mesa").innerText = pessoa.mesa;
+    const nomeTxt = clone.querySelector("#nomePessoa");
+    const mesaTxt = clone.querySelector("#mesa");
+    const btnCheckin = clone.querySelector("button");
 
-    clone.querySelector("button").onclick = () => {
-      alert("Check-in realizado!");
-    };
+    nomeTxt.innerText = nomePessoa.nome;
+    mesaTxt.innerText = nomePessoa.mesa;
+
+    // Se o status no banco já for 'confirmado', desativamos o botão
+    if (nomePessoa.status === 'confirmado') {
+        btnCheckin.innerText = "Confirmado ✅";
+        btnCheckin.classList.replace("bg-[var(--color-quaternary-100)]", "bg-green-600");
+        btnCheckin.disabled = true;
+        btnCheckin.classList.remove("cursor-pointer");
+    } else {
+        // Se estiver pendente, adicionamos o evento de clique
+        btnCheckin.onclick = async () => {
+            try {
+                const response = await fetch(`http://localhost:3000/api/guests/${nomePessoa.id}/checkin`, {
+                    method: 'PATCH'
+                });
+
+                if (response.ok) {
+                    alert(`Check-in de ${nomePessoa.nome} realizado!`);
+                    carregarConvidados();
+                } else {
+                    alert("Erro ao realizar check-in.");
+                }
+            } catch (error) {
+                console.error("Erro:", error);
+            }
+        };
+    }
 
     lista.appendChild(clone);
   });
@@ -45,16 +80,21 @@ const mostrarConvidados = (listaConvidados) => {
 
 // PESQUISA
 busca.oninput = () => {
-  let valor = busca.value.toLowerCase();
+    let valor = busca.value.toLowerCase();
 
-  if (valor === "") {
-    lista.innerHTML = "";
-    return;
-  }
+    if (valor === "") {
+        lista.innerHTML = "";
+        return;
+    }
 
-  let filtrados = convidados.filter((pessoa) =>
-    pessoa.nome.toLowerCase().includes(valor)
-  );
+    // Filtra por nome ou por CPF
+    let filtrados = convidados.filter((pessoa) =>
+        pessoa.nome.toLowerCase().includes(valor) || 
+        (pessoa.cpf && pessoa.cpf.includes(valor))
+    );
 
-  mostrarConvidados(filtrados);
+    mostrarConvidados(filtrados);
 };
+
+// Inicializa os dados assim que a página abre
+carregarConvidados();

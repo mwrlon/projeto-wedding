@@ -43,10 +43,49 @@ app.post('/api/guests', (req, res) => {
     .catch(error => res.status(500).json({ error: error.message }));
 });
 
+app.delete('/api/guests/:id', (req, res) => {
+  const { id } = req.params;
+
+  db('convidados')
+    .where({ id })
+    .del()
+    .then((count) => {
+      if (count > 0) {
+        res.json({ message: 'Convidado deletado com sucesso!' });
+      } else {
+        res.status(404).json({ error: 'Convidado não encontrado.' });
+      }
+    })
+    .catch(error => res.status(500).json({ error: error.message }));
+});
+
 // ROTAS PARA CHECK-IN ----------------------------------------------
 
-// ROTAS PARA DASHBOARD ----------------------------------------------
+app.get('/api/checkin', (req, res) => {
+  db('convidados')
+    .select('*')
+    .then(convidados => res.json(convidados))
+    .catch(error => res.status(500).json({ error: error.message }));
+});
 
+app.patch('/api/guests/:id/checkin', (req, res) => {
+  const { id } = req.params;
+
+  db('convidados')
+    .where({ id })
+    .update({ status: 'confirmado' }) // Usando o ENUM do seu banco
+    .then((count) => {
+      if (count > 0) {
+        res.json({ message: 'Check-in realizado!' });
+      } else {
+        res.status(404).json({ error: 'Convidado não encontrado.' });
+      }
+    })
+    .catch(error => res.status(500).json({ error: error.message }));
+});
+  
+
+// ROTAS PARA DASHBOARD ----------------------------------------------
 
 // MENSAGEM QUE APARECE NO CONSOLE QUANDO O SERVIDOR ESTÁ RODANDO
 

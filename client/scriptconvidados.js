@@ -15,8 +15,8 @@ document.querySelectorAll("#logoutButton").forEach((botao) => {
     }
   };
 });
-
 // POPUP
+
 let popup = document.getElementById("popupCadastro");
 let background = document.getElementById("background");
 let header = document.getElementById("header");
@@ -41,14 +41,14 @@ const listaContainer = document.getElementById("lista");
 async function carregarConvidados() {
   try {
     const response = await fetch(apiUrl);
-    const convidados = await response.json();
-    mostrar(convidados);
+    // 2. Salve os dados vindos da API na variável global
+    todosOsConvidados = await response.json(); 
+    mostrar(todosOsConvidados);
   } catch (error) {
     console.error("Erro ao carregar:", error);
     listaContainer.innerHTML = "<p>Erro ao carregar convidados.</p>";
   }
 }
-
 const mostrar = (convidados) => {
   listaContainer.innerHTML = "";
   
@@ -68,10 +68,7 @@ const mostrar = (convidados) => {
           </div>
 
           <div class="flex gap-4 text-xl sm:items-start items-center">
-            <button onclick="editar(${c.id})" class="cursor-pointer hover:scale-110 transition">
-                <img src="/client/src/files/editar.png" alt="Botão Editar" class="w-6 h-auto">
-            </button>
-            <button onclick="excluir(${c.id})" class="cursor-pointer hover:scale-110 transition">
+            <button onclick="excluirConvidado(${c.id})" class="cursor-pointer hover:scale-110 transition">
                 <img src="/client/src/files/excluir.png" alt="Botão Excluir" class="w-6 h-auto">
             </button>
           </div>
@@ -141,13 +138,40 @@ const cadastrarUsuario = async () => {
 
 
 // BUSCA
-busca.oninput = () => {
-  let valor = busca.value.toLowerCase();
 
-  let filtrados = convidados.filter((c) =>
-    c.nome.toLowerCase().includes(valor)
+const campoBusca = document.getElementById("busca");
+
+campoBusca.oninput = () => {
+  const valor = campoBusca.value.toLowerCase();
+
+  // Filtramos em cima da lista global 'todosOsConvidados'
+  const filtrados = todosOsConvidados.filter((c) =>
+    c.nome.toLowerCase().includes(valor) ||
+    c.cpf.includes(valor) // Dica: agora busca por nome ou CPF!
   );
 
   mostrar(filtrados);
+};
+
+const excluirConvidado = async (id) => {
+  if (confirm("Tem certeza?")) {
+    try {
+      console.log("ID que será enviado:", id); 
+
+      const response = await fetch(`http://localhost:3000/api/guests/${id}`, {
+        method: 'DELETE',
+      });
+
+      if (response.ok) {
+        alert("Excluído!");
+        carregarConvidados();
+      } else {
+        const erro = await response.json();
+        alert("Erro: " + erro.error);
+      }
+    } catch (error) {
+      alert("Erro na conexão: " + error.message);
+    }
+  }
 };
 
