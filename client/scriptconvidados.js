@@ -35,7 +35,7 @@ document.getElementById("fechar").onclick = () => {
 
 // MOSTRAR CONVIDADOS
 
-const apiUrl = 'http://localhost:3000/api/convidados';
+const apiUrl = 'http://localhost:3000/api/guests';
 const listaContainer = document.getElementById("lista");
 
 async function carregarConvidados() {
@@ -159,7 +159,7 @@ const excluirConvidado = async (id) => {
     try {
       console.log("ID que será enviado:", id); 
 
-      const response = await fetch(`http://localhost:3000/api/convidados/${id}`, {
+      const response = await fetch(`http://localhost:3000/api/guests/${id}`, {
         method: 'DELETE',
       });
 

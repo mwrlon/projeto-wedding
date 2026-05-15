@@ -33,7 +33,7 @@ app.post('/api/login', async (req, res) => {
 
 // MOSTRAR CONVIDADOS CADASTRADOS
 
-app.get('/api/convidados', (req, res) => {
+app.get('/api/guests', (req, res) => {
   db('convidados')
     .select('*')
     .then(convidados => res.json(convidados))
@@ -42,7 +42,7 @@ app.get('/api/convidados', (req, res) => {
 
 // CADASTRAR USUARIO NOVO
 
-app.post('/api/convidados', (req, res) => {
+app.post('/api/guests', (req, res) => {
   const { nome, cpf, email, mesa } = req.body;
   db('convidados')
     .insert({ nome, cpf, email, mesa })
@@ -83,14 +83,27 @@ app.get('/api/checkin', (req, res) => {
 
 app.patch('/api/guests/:id/checkin', async (req, res) => {
     const { id } = req.params;
+
     try {
-        await db('convidados').where({ id }).update({ status: 'confirmado' });
-        res.json({ message: "Check-in realizado" });
+        await db.transaction(async (trx) => {
+            // 1. Atualiza o status do convidado para confirmado
+            await trx('convidados')
+                .where({ id })
+                .update({ status: 'confirmado' });
+
+            // 2. Adiciona o registro na tabela de checkins
+            await trx('checkins').insert({
+                convidado_id: id
+            });
+        });
+
+        res.json({ message: "Check-in realizado e registrado na tabela de logs!" });
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        console.error(error);
+        res.status(500).json({ error: "Erro ao processar check-in" });
     }
 });
-  
+
 
 // ROTAS PARA DASHBOARD ----------------------------------------------
 
@@ -106,11 +119,29 @@ app.get('/api/dashboard', async (req, res) => {
 
     // ENVIA OS DADOS
     res.json({
-      total: total,
-      confirmados: confirmados,
-      pendentes: pendentes
+      total: total.count,
+      confirmados: confirmados.count,
+      pendentes: pendentes.count
     });
     
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// ROTAS PARA GRÁFICO ----------------------------------------------
+
+app.get('/api/grafico-confirmacoes', async (req, res) => {
+  try {
+    // Agrupa por data e conta
+    const dados = await db('convidados')
+      .where({ status: 'confirmado' })
+      .select(db.raw('DATE(atualizado_em) as data')) // ou data_checkin se usar a tabela checkins
+      .count('id as total')
+      .groupBy('data')
+      .orderBy('data', 'asc');
+
+    res.json(dados);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

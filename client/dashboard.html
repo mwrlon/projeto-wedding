@@ -16,6 +16,7 @@
     />
 
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
   </head>
   <body class="px-4 md:px-10 bg-[var(--color-background)]">
     <!-- HEADER -->
@@ -112,17 +113,14 @@
 
   </section>
 
-  <!-- 🔥 SEÇÃO DE GRÁFICOS -->
+  <!-- SEÇÃO DE GRÁFICOS -->
   <section class="grid gap-6 xl:grid-cols-2">
 
-    <div class="bg-white p-6 rounded-3xl shadow h-80">
-      <h2 class="text-gray-600 mb-4">Confirmações por dia</h2>
-      <div id="graficoConfirmacoes" class="w-full h-full"></div>
-    </div>
+    <!-- CONFIRMAÇÕES POR DIA  -->
 
-    <div class="bg-white p-6 rounded-3xl shadow h-80">
-      <h2 class="text-gray-600 mb-4">Status dos convidados</h2>
-      <div id="graficoStatus" class="w-full h-full"></div>
+    <div class="bg-white p-6 rounded-3xl shadow h-80 w-455">
+      <h2 class="text-gray-600 mb-4">Confirmações por dia</h2>
+        <canvas id="line-chart" class="w-full h-full"></canvas>
     </div>
 
   </section>
@@ -135,7 +133,7 @@
   </section>
 
 </main>
-
-  <script src="scriptdashboard.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="scriptdashboard.js"></script>
   </body>
 </html>

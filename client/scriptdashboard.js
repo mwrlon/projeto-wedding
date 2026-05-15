@@ -79,5 +79,55 @@ const adicionarCheckins = (lista) => {
   });
 };
 
+// GRAFICO
+
+const graficoConfirmacoes = async () => {
+  try {
+    const response = await fetch('http://localhost:3000/api/grafico-confirmacoes');
+    const dadosApi = await response.json();
+
+    const labels = dadosApi.map(item => {
+        const data = new Date(item.data);
+        return data.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' });
+    });
+    const valores = dadosApi.map(item => item.total);
+
+    const ctx = document.getElementById('line-chart').getContext('2d');
+    
+    new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: labels,
+        datasets: [{
+          label: 'Confirmações',
+          data: valores,
+          borderColor: '#b97b45',
+          backgroundColor: 'rgba(185, 123, 69, 0.2)',
+          borderWidth: 3,
+          fill: true,
+          tension: 0.4
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            legend: { display: false }
+        },
+        scales: {
+          y: { beginAtZero: true, ticks: { stepSize: 1 } }
+        }
+      }
+    });
+    await graficoConfirmacoes();
+    
+  } catch (error) {
+    console.error("Erro ao gerar gráfico:", error);
+  }
+};
+
+// Chame a função dentro do seu carregarDadosDashboard()
+graficoConfirmacoes();
+
 // Iniciar
 carregarDadosDashboard();
