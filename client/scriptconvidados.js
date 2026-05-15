@@ -35,7 +35,7 @@ document.getElementById("fechar").onclick = () => {
 
 // MOSTRAR CONVIDADOS
 
-const apiUrl = 'http://localhost:3000/api/guests';
+const apiUrl = 'http://localhost:3000/api/convidados';
 const listaContainer = document.getElementById("lista");
 
 async function carregarConvidados() {
@@ -49,6 +49,7 @@ async function carregarConvidados() {
     listaContainer.innerHTML = "<p>Erro ao carregar convidados.</p>";
   }
 }
+
 const mostrar = (convidados) => {
   listaContainer.innerHTML = "";
   
@@ -158,7 +159,7 @@ const excluirConvidado = async (id) => {
     try {
       console.log("ID que será enviado:", id); 
 
-      const response = await fetch(`http://localhost:3000/api/guests/${id}`, {
+      const response = await fetch(`http://localhost:3000/api/convidados/${id}`, {
         method: 'DELETE',
       });
 

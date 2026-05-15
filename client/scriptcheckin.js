@@ -16,67 +16,67 @@ document.querySelectorAll("#logoutButton").forEach((botao) => {
     };
 });
 
-// CHECK-IN
 const lista = document.getElementById("listaBusca");
-const template = document.getElementById("cardBusca");
 const busca = document.getElementById("busca");
-
 const apiUrl = 'http://localhost:3000/api/guests';
-let convidados = []; // Começa vazio e será preenchido pela API
+let convidados = []; 
 
-// --- NOVO: Função para buscar convidados do Banco de Dados ---
 async function carregarConvidados() {
     try {
         const response = await fetch(apiUrl);
         convidados = await response.json();
-        console.log("Dados carregados:", convidados);
     } catch (error) {
         console.error("Erro ao carregar convidados:", error);
     }
 }
 
-const mostrarConvidados = (listaConvidados) => {
-  lista.innerHTML = "";
+const mostrarConvidados = (listaFiltrada) => {
+    lista.innerHTML = "";
+    let htmlGerado = "";
 
-  listaConvidados.forEach((nomePessoa) => {
-    let clone = template.content.cloneNode(true);
+    listaFiltrada.forEach((c) => {
+        const isConfirmado = c.status === 'confirmado';
+        
+        const botaoHtml = isConfirmado 
+            ? `<button class="px-4 py-2 rounded-lg bg-green-600 text-white font-medium" disabled>Confirmado ✅</button>`
+            : `<button onclick="fazerCheckin(${c.id}, '${c.nome}')" class="px-4 py-2 rounded-lg bg-[var(--color-quaternary-100)] text-white cursor-pointer hover:scale-105 transition">Check-in</button>`;
 
-    const nomeTxt = clone.querySelector("#nomePessoa");
-    const mesaTxt = clone.querySelector("#mesa");
-    const btnCheckin = clone.querySelector("button");
+        htmlGerado += `
+        <div class="flex items-center justify-between w-full min-h-20 px-4 border border-black/30 rounded-xl bg-white mb-2">
+            <div class="flex flex-col">
+                <p class="font-medium text-lg">${c.nome}</p>
+                <p class="text-sm text-gray-600">
+                    Mesa <span>${c.mesa}</span> | CPF: <span>${c.cpf}</span>
+                </p>
+            </div>
+            <div>
+                ${botaoHtml}
+            </div>
+        </div>
+        `;
+    });
 
-    nomeTxt.innerText = nomePessoa.nome;
-    mesaTxt.innerText = nomePessoa.mesa;
+    lista.innerHTML = htmlGerado;
+};
 
-    // Se o status no banco já for 'confirmado', desativamos o botão
-    if (nomePessoa.status === 'confirmado') {
-        btnCheckin.innerText = "Confirmado ✅";
-        btnCheckin.classList.replace("bg-[var(--color-quaternary-100)]", "bg-green-600");
-        btnCheckin.disabled = true;
-        btnCheckin.classList.remove("cursor-pointer");
-    } else {
-        // Se estiver pendente, adicionamos o evento de clique
-        btnCheckin.onclick = async () => {
-            try {
-                const response = await fetch(`http://localhost:3000/api/guests/${nomePessoa.id}/checkin`, {
-                    method: 'PATCH'
-                });
+window.fazerCheckin = async (id, nome) => {
+    try {
+        const response = await fetch(`${apiUrl}/${id}/checkin`, {
+            method: 'PATCH'
+        });
 
-                if (response.ok) {
-                    alert(`Check-in de ${nomePessoa.nome} realizado!`);
-                    carregarConvidados();
-                } else {
-                    alert("Erro ao realizar check-in.");
-                }
-            } catch (error) {
-                console.error("Erro:", error);
-            }
-        };
+        if (response.ok) {
+            alert(`Check-in de ${nome} realizado com sucesso!`);
+            await carregarConvidados();
+            busca.value = "";
+            lista.innerHTML = ""; 
+        } else {
+            alert("Erro ao realizar check-in.");
+        }
+    } catch (error) {
+        console.error("Erro:", error);
     }
-
-    lista.appendChild(clone);
-  });
-}
+};
 
 // PESQUISA
 busca.oninput = () => {
@@ -87,7 +87,6 @@ busca.oninput = () => {
         return;
     }
 
-    // Filtra por nome ou por CPF
     let filtrados = convidados.filter((pessoa) =>
         pessoa.nome.toLowerCase().includes(valor) || 
         (pessoa.cpf && pessoa.cpf.includes(valor))
@@ -96,5 +95,4 @@ busca.oninput = () => {
     mostrarConvidados(filtrados);
 };
 
-// Inicializa os dados assim que a página abre
 carregarConvidados();
