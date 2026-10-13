@@ -122,7 +122,7 @@
       >
         <!-- HEADING -->
 
-        <h1 class="flex justify-center mb-10 px-4 text-3xl md:text-4xl lg:text-5xl">Novo Convidado</h1>
+        <h1 id="tituloPopup" class="flex justify-center mb-10 px-4 text-3xl md:text-4xl lg:text-5xl">Novo Convidado</h1>
 
         <!-- NOME -->
 
@@ -187,7 +187,7 @@
         <!-- BOTAO -->
 
         <button
-          type="button" onclick="cadastrarUsuario()"
+          id="botaoSalvar" type="button" onclick="salvarConvidado()"
           class="px-6 py-3 text-xl bg-[var(--color-secondary)] rounded-2xl text-white hover:shadow-lg hover:shadow-amber-700/30 hover:scale-105 transition-all duration-300 ease-in-out cursor-pointer"
         >
           Cadastrar

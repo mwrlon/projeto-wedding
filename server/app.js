@@ -21,7 +21,7 @@ app.use(
       if (!origin || config.cors.origins.includes(origin)) return callback(null, true);
       callback(new Error('Origem não permitida pelo CORS'));
     },
-    methods: ['GET', 'POST', 'PATCH', 'DELETE'],
+    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization'],
     exposedHeaders: ['X-Total-Count'],
     maxAge: 600,

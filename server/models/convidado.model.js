@@ -25,6 +25,14 @@ const convidadoModel = {
     return id;
   },
 
+  // atualizado_em é reatribuído a ele mesmo de propósito: sem isso o MySQL (ON UPDATE
+  // CURRENT_TIMESTAMP) moveria a data de confirmação do convidado no gráfico ao editar.
+  update(id, { nome, cpf, email, mesa }) {
+    return db(TABLE)
+      .where({ id })
+      .update({ nome, cpf, email, mesa, atualizado_em: db.raw('??', ['atualizado_em']) });
+  },
+
   remove(id) {
     return db(TABLE).where({ id }).del();
   },

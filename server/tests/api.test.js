@@ -65,6 +65,7 @@ describe('autenticação JWT', () => {
   const rotas = [
     ['get', '/api/guests'],
     ['post', '/api/guests'],
+    ['put', '/api/guests/1'],
     ['delete', '/api/guests/1'],
     ['patch', '/api/guests/1/checkin'],
     ['get', '/api/checkin'],
@@ -339,6 +340,98 @@ describe('convidados', () => {
     const res = await request(app).delete('/api/guests/5').set(authHeader());
     assert.equal(res.status, 404);
     assert.equal(res.body.error, 'Convidado não encontrado.');
+  });
+
+  describe('PUT /api/guests/:id', () => {
+    beforeEach(() => {
+      convidadoModel.findById = async () => ({ id: 7, nome: 'Antigo', status: 'pendente' });
+      convidadoModel.update = async () => 1;
+    });
+
+    test('atualiza e normaliza os dados', async () => {
+      let recebido;
+      convidadoModel.update = async (id, dados) => {
+        recebido = { id, dados };
+        return 1;
+      };
+      const res = await request(app).put('/api/guests/7').set(authHeader()).send(guestValido);
+      assert.equal(res.status, 200);
+      assert.equal(res.body.message, 'Convidado atualizado com sucesso!');
+      assert.deepEqual(recebido, {
+        id: 7,
+        dados: { nome: 'Maria Souza', cpf: '123.456.789-01', email: 'maria@email.com', mesa: 4 },
+      });
+    });
+
+    test('não deixa alterar status nem id por mass assignment', async () => {
+      let dados;
+      convidadoModel.update = async (id, d) => {
+        dados = d;
+        return 1;
+      };
+      await request(app)
+        .put('/api/guests/7')
+        .set(authHeader())
+        .send({ ...guestValido, status: 'confirmado', id: 99 });
+      assert.equal(dados.status, undefined);
+      assert.equal(dados.id, undefined);
+    });
+
+    test('convidado inexistente -> 404 e não tenta atualizar', async () => {
+      let atualizou = false;
+      convidadoModel.findById = async () => undefined;
+      convidadoModel.update = async () => {
+        atualizou = true;
+      };
+      const res = await request(app).put('/api/guests/7').set(authHeader()).send(guestValido);
+      assert.equal(res.status, 404);
+      assert.equal(atualizou, false);
+    });
+
+    test('dados inválidos -> 400', async () => {
+      const res = await request(app)
+        .put('/api/guests/7')
+        .set(authHeader())
+        .send({ ...guestValido, cpf: '123' });
+      assert.equal(res.status, 400);
+    });
+
+    test('id inválido -> 400', async () => {
+      const res = await request(app).put('/api/guests/abc').set(authHeader()).send(guestValido);
+      assert.equal(res.status, 400);
+    });
+
+    test('CPF/email de outro convidado -> 409', async () => {
+      convidadoModel.update = async () => {
+        const err = new Error('dup');
+        err.code = 'ER_DUP_ENTRY';
+        err.sqlMessage = "Duplicate entry 'x@x.com' for key 'convidados.email'";
+        throw err;
+      };
+      const res = await request(app).put('/api/guests/7').set(authHeader()).send(guestValido);
+      assert.equal(res.status, 409);
+      assert.equal(res.body.error, 'Email já cadastrado.');
+    });
+
+    test('CORS libera PUT no preflight', async () => {
+      const origem = config.cors.origins[0];
+      const res = await request(app)
+        .options('/api/guests/7')
+        .set('Origin', origem)
+        .set('Access-Control-Request-Method', 'PUT')
+        .set('Access-Control-Request-Headers', 'authorization,content-type');
+      assert.ok(res.status === 204 || res.status === 200);
+      assert.match(res.headers['access-control-allow-methods'], /PUT/);
+    });
+
+    test('o model preserva atualizado_em (gráfico não muda ao editar)', () => {
+      const db = require('../config/database');
+      const { sql } = db('convidados')
+        .where({ id: 7 })
+        .update({ nome: 'x', atualizado_em: db.raw('??', ['atualizado_em']) })
+        .toSQL();
+      assert.match(sql, /`atualizado_em` = `atualizado_em`/);
+    });
   });
 
   for (const id of ['abc', '1;DROP TABLE convidados', '-1', '0', '1.5']) {

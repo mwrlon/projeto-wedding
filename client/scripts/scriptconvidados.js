@@ -23,16 +23,56 @@ let popup = document.getElementById("popupCadastro");
 let background = document.getElementById("background");
 let header = document.getElementById("header");
 
-function cadastrarNovo() {
+const tituloPopup = document.getElementById("tituloPopup");
+const botaoSalvar = document.getElementById("botaoSalvar");
+const camposForm = ["name", "cpf", "email", "mesa"];
+
+// ID do convidado sendo editado (null = cadastrando um novo)
+let convidadoEmEdicao = null;
+
+const limparFormulario = () => {
+  camposForm.forEach((campo) => {
+    document.getElementById(campo).value = "";
+  });
+};
+
+function abrirPopup() {
   popup.classList.remove("hidden");
   background.classList.add("blur-sm");
   header.classList.add("blur-sm");
 }
 
-document.getElementById("fechar").onclick = () => {
+function fecharPopup() {
   popup.classList.add("hidden");
   background.classList.remove("blur-sm");
   header.classList.remove("blur-sm");
+}
+
+function cadastrarNovo() {
+  convidadoEmEdicao = null;
+  limparFormulario();
+  tituloPopup.textContent = "Novo Convidado";
+  botaoSalvar.textContent = "Cadastrar";
+  abrirPopup();
+}
+
+function editarConvidado(id) {
+  const convidado = todosOsConvidados.find((c) => c.id === id);
+  if (!convidado) return;
+
+  convidadoEmEdicao = id;
+  document.getElementById("name").value = convidado.nome;
+  document.getElementById("cpf").value = convidado.cpf;
+  document.getElementById("email").value = convidado.email;
+  document.getElementById("mesa").value = convidado.mesa;
+  tituloPopup.textContent = "Editar Convidado";
+  botaoSalvar.textContent = "Salvar";
+  abrirPopup();
+}
+
+document.getElementById("fechar").onclick = () => {
+  convidadoEmEdicao = null;
+  fecharPopup();
 };
 
 // MOSTRAR CONVIDADOS
@@ -72,6 +112,9 @@ const mostrar = (convidados) => {
           </div>
 
           <div class="flex gap-4 text-xl sm:items-start items-center">
+            <button onclick="editarConvidado(${Number(c.id)})" class="cursor-pointer hover:scale-110 transition">
+                <img src="/client/src/files/editar.png" alt="Botão Editar" class="w-6 h-auto">
+            </button>
             <button onclick="excluirConvidado(${Number(c.id)})" class="cursor-pointer hover:scale-110 transition">
                 <img src="/client/src/files/excluir.png" alt="Botão Excluir" class="w-6 h-auto">
             </button>
@@ -91,54 +134,45 @@ const mostrar = (convidados) => {
 // Chama a função ao abrir a página
 carregarConvidados();
 
-// CADASTRAR
-const cadastrarUsuario = async () => {
-  let nome = document.getElementById("name").value;
-  let cpf = document.getElementById("cpf").value;
-  let email = document.getElementById("email").value;
-  let mesa = document.getElementById("mesa").value;
+// CADASTRAR / EDITAR
+const salvarConvidado = async () => {
+  const nome = document.getElementById("name").value;
+  const cpf = document.getElementById("cpf").value;
+  const email = document.getElementById("email").value;
+  const mesa = document.getElementById("mesa").value;
 
   if (!nome || !cpf || !email || !mesa) {
     alert("Preencha tudo");
     return;
   }
 
-  // Criamos o objeto com os dados
-  const novoConvidado = { nome, cpf, email, mesa };
+  const dados = { nome, cpf, email, mesa };
+  const editando = convidadoEmEdicao !== null;
 
   try {
-    // Usamos 'await' para esperar o servidor responder
-    const response = await authFetch(apiUrl, {
-      method: 'POST',
+    const response = await authFetch(editando ? `${apiUrl}/${convidadoEmEdicao}` : apiUrl, {
+      method: editando ? 'PUT' : 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(novoConvidado)
+      body: JSON.stringify(dados)
     });
-      if (response.ok) {
-        alert("Convidado cadastrado com sucesso!");
-        
-        // Limpa os campos do formulário
-        document.getElementById("name").value = "";
-        document.getElementById("cpf").value = "";
-        document.getElementById("email").value = "";
-        document.getElementById("mesa").value = "";
 
-        carregarConvidados(); // Atualiza a lista na tela
-        fecharPopup();        // Fecha o modal
-      } else {
-        const erro = await response.json();
-        alert("Erro ao cadastrar: " + (erro.error || "Erro desconhecido"));
-      }
-    } catch (error) {
-        document.getElementById("name").value = "";
-        document.getElementById("cpf").value = "";
-        document.getElementById("email").value = "";
-        document.getElementById("mesa").value = "";
-      }
-    };
+    if (response.ok) {
+      alert(editando ? "Convidado atualizado com sucesso!" : "Convidado cadastrado com sucesso!");
 
-  popup.classList.add("hidden");
-  background.classList.remove("blur-sm");
-  header.classList.remove("blur-sm");
+      convidadoEmEdicao = null;
+      limparFormulario();
+      carregarConvidados(); // Atualiza a lista na tela
+      fecharPopup();        // Fecha o modal
+    } else {
+      const erro = await response.json();
+      alert((editando ? "Erro ao atualizar: " : "Erro ao cadastrar: ") + (erro.error || "Erro desconhecido"));
+    }
+  } catch (error) {
+    alert("Erro na conexão: " + error.message);
+  }
+};
+
+fecharPopup();
 
 
 // BUSCA

@@ -30,6 +30,18 @@ const convidadoController = {
     res.status(201).json({ message: 'Convidado cadastrado com sucesso!', id });
   },
 
+  // PUT /api/guests/:id
+  async atualizar(req, res) {
+    const { id } = req.validated.params;
+
+    // Checa antes porque o MySQL pode informar 0 linhas afetadas quando nada mudou.
+    const existente = await convidadoModel.findById(id);
+    if (!existente) throw new AppError('Convidado não encontrado.', 404);
+
+    await convidadoModel.update(id, req.validated.body);
+    res.json({ message: 'Convidado atualizado com sucesso!' });
+  },
+
   // DELETE /api/guests/:id
   async remover(req, res) {
     const { id } = req.validated.params;

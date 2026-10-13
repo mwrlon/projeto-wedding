@@ -12,6 +12,13 @@ router.get('/', validate({ query: paginacaoQuery }), convidadoController.listar)
 // POST   /api/guests
 router.post('/', validate({ body: criarConvidadoBody }), convidadoController.criar);
 
+// PUT    /api/guests/:id
+router.put(
+  '/:id',
+  validate({ params: idParams, body: criarConvidadoBody }),
+  convidadoController.atualizar
+);
+
 // DELETE /api/guests/:id
 router.delete('/:id', validate({ params: idParams }), convidadoController.remover);
 

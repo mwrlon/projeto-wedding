@@ -79,6 +79,7 @@ Mesmo sem rodar o script, contas antigas são convertidas automaticamente no pri
 | POST | `/api/login` | não |
 | GET | `/api/guests` (opcional `?page=&limit=`, total em `X-Total-Count`) | sim |
 | POST | `/api/guests` | sim |
+| PUT | `/api/guests/:id` | sim |
 | DELETE | `/api/guests/:id` | sim |
 | PATCH | `/api/guests/:id/checkin` | sim |
 | GET | `/api/checkin` | sim |
