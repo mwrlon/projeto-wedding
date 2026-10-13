@@ -26,8 +26,8 @@ Fluxo de uma requisição: `rota → middlewares (rate limit, JWT, validação) 
 
 ```bash
 npm install
-cp .env.example .env     # preencha DB_PASSWORD e JWT_SECRET
-npm start                # ou: npm run dev (reinicia ao salvar)
+cp .env.example .env    # preencha DB_PASSWORD e JWT_SECRET
+npm start               # ou: npm run dev (reinicia ao salvar)
 npm test
 ```
 
