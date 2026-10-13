@@ -5,7 +5,7 @@ INSERT INTO usuarios (email, senha) VALUES
 ('cerimonialista@email.com', '$2b$12$FiJxDKf6zBHqi9l6PnRWpOKQ1PdkVlWbzpgIMbQIi93K9PffYuWOG');
 
 INSERT INTO convidados (nome, cpf, email, mesa) VALUES 
-('Ana Silva', '111.111.111-01', 'ana.silva@email.com', 1),
+('Ana Silva', '111.111.111-02', 'ana.silva@email.com', 1),
 ('Bruno Oliveira', '222.222.222-02', 'bruno.o@email.com', 1),
 ('Carla Souza', '333.333.333-03', 'carla.souza@email.com', 2),
 ('Diego Lima', '444.444.444-04', 'diego.lima@email.com', 2),
