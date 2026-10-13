@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="/client/style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="shortcut icon"
+      href="/client/src/files/favicon.ico"
+      type="image/x-icon"
+    />
+
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+  </head>
+  <body class="px-4 md:px-10 bg-[var(--color-background)]">
+    <!-- HEADER -->
+    <header> 
+    <div class="flex items-center justify-between w-full p-4 border-b border-amber-700/50">
+      <img src="/client/src/img/logowedding.png" class="w-28 md:w-32" />
+
+      <!-- NAV -->
+      <nav class="hidden xl:flex gap-10 text-lg">
+        <a
+          href="dashboard.html"
+          class="px-4 py-1 rounded-4xl hover:bg-[var(--color-quaternary-100)] text-white bg-[var(--color-quaternary-200)] active:bg-[var(--color-quaternary-200)] transition"
+        >
+          Dashboard
+        </a>
+        <a
+          href="convidados.html"
+          class="px-4 py-1 rounded-4xl hover:bg-[var(--color-quaternary-100)] hover:text-white active:bg-[var(--color-quaternary-200)] transition"
+        >
+          Convidados
+        </a>
+        <a
+          href="checkin.html"
+          class="px-4 py-1 rounded-4xl hover:bg-[var(--color-quaternary-100)] hover:text-white active:bg-[var(--color-quaternary-200)] transition"
+        >
+          Check-in
+        </a>
+        <div class="flex items-end">
+          <button class="px-4 py-1 rounded-4xl hover:bg-[var(--color-quaternary-100)] hover:text-white active:bg-[var(--color-quaternary-200)] transition cursor-pointer" id="logoutButton">Sair</button>
+        </div>
+      </nav>
+
+
+
+      <!-- MENU MOBILE -->
+       <button id="burgermenu">
+      <img
+        src="/client/src/files/burgermenu.svg"
+        class="w-8 xl:hidden cursor-pointer"
+      />
+      </button>
+      </div>
+
+        <!-- MENU DROPDOWN -->
+  <div
+    id="navlinks"
+    class="hidden opacity-0 transition xl:hidden flex flex-col place-items-center absolute right-10 top-18 mt-2 w-54 bg-white rounded-2xl shadow-lg flex-col p-4"
+  >
+    <a href="dashboard.html" class="py-1 px-3 my-2 text-white bg-[var(--color-quaternary-100)] active:bg-[var(--color-quaternary-200)] rounded-2xl text-lg">Dashboard</a>
+    <a href="convidados.html" class="py-1 px-3 my-2  border-b border-amber-700/50 text-lg">Convidados</a>
+    <a href="checkin.html" class="py-1 px-3 my-2  border-b border-amber-700/50 text-lg">Check-in</a>
+    <button class="py-1 px-3 my-2  border-b border-amber-700/50 text-lg cursor-pointer" id="logoutButton">Sair</button>
+  </div>
+</header>
+
+<!-- CONTEÚDO -->
+<main class="mt-8 mb-6 flex flex-col gap-8">
+
+  <!-- TÍTULO -->
+  <div>
+    <h1 class="text-4xl md:text-5xl font-semibold">Dashboard</h1>
+    <p class="text-gray-500 md:text-md md:ml-1">
+      Visão geral do evento
+    </p>
+  </div>
+
+  <!-- CARDS -->
+  <section class="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+
+    <!-- CARD -->
+    <div class="bg-white p-6 rounded-3xl shadow hover:shadow-lg transition">
+      <h2 class="text-gray-500">Total de Convidados</h2>
+      <div class="flex justify-between items-center mt-4">
+        <img src="/client/src/files/pessoas.png" class="w-10" />
+        <p id="registrados" class="text-3xl font-bold"></p>
+      </div>
+    </div>
+
+    <div class="bg-white p-6 rounded-3xl shadow hover:shadow-lg transition">
+      <h2 class="text-emerald-600">Confirmados</h2>
+      <div class="flex justify-between items-center mt-4">
+        <img src="/client/src/files/marca-certo.png" class="w-10" />
+        <p id="confirmados" class="text-3xl font-bold text-emerald-600"></p>
+      </div>
+    </div>
+
+    <div class="bg-white p-6 rounded-3xl shadow hover:shadow-lg transition">
+      <h2 class="text-yellow-500">Pendentes</h2>
+      <div class="flex justify-between items-center mt-4">
+        <img src="/client/src/files/marca-errado.png" class="w-10" />
+        <p id="pendentes" class="text-3xl font-bold text-yellow-500"></p>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- SEÇÃO DE GRÁFICOS -->
+  <section class="grid gap-6 xl:grid-cols-2">
+
+    <!-- CONFIRMAÇÕES POR DIA  -->
+
+    <div class="bg-white p-6 rounded-3xl shadow h-80 w-455">
+      <h2 class="text-gray-600 mb-4">Confirmações por dia</h2>
+        <canvas id="line-chart" class="w-full h-full"></canvas>
+    </div>
+
+  </section>
+
+  <!-- ÚLTIMOS CHECK-INS -->
+  <section id="ultimosCheckins" class="bg-[#fffbf7] rounded-3xl p-6 shadow">
+    <h2 class="text-lg text-gray-600 mb-4">Últimos Check-ins</h2>
+
+    <div id="listaCheckins"></div>
+  </section>
+
+</main>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="/client/api.js"></script>
+    <script src="/client/scripts/scriptdashboard.js"></script>
+  </body>
+</html>

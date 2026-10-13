@@ -1,0 +1,30 @@
+CREATE DATABASE IF NOT EXISTS wedding_pass;
+USE wedding_pass;
+
+CREATE TABLE usuarios (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  email VARCHAR(100) UNIQUE NOT NULL,
+  senha VARCHAR(255) NOT NULL,
+  criado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE convidados (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  nome VARCHAR(100) NOT NULL,
+  cpf VARCHAR(14) UNIQUE NOT NULL,
+  email VARCHAR(100) NOT NULL UNIQUE,
+  mesa INT NOT NULL,
+  status ENUM('pendente', 'confirmado') DEFAULT 'pendente',
+  criado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  atualizado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  INDEX idx_convidados_status (status),
+  INDEX idx_convidados_status_atualizado (status, atualizado_em)
+);
+
+CREATE TABLE checkins (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  convidado_id INT NOT NULL,
+  checkin_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (convidado_id) REFERENCES convidados(id) ON DELETE CASCADE
+);
+

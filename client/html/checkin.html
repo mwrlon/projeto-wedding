@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Check-in</title>
+    <link rel="stylesheet" href="/client/style.css" />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Jost:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="shortcut icon" href="/client/src/files/favicon.ico" type="image/x-icon">
+
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  </head>
+
+  <body class="px-4 md:px-10 bg-[var(--color-background)]">
+    <!-- HEADER -->
+    <header> 
+    <div class="flex items-center justify-between w-full p-4 border-b border-amber-700/50">
+      <img src="/client/src/img/logowedding.png" class="w-28 md:w-32" />
+
+      <!-- NAV -->
+      <nav class="hidden xl:flex gap-10 text-lg">
+        <a
+          href="dashboard.html"
+          class="px-4 py-1 rounded-4xl hover:bg-[var(--color-quaternary-100)] hover:text-white active:bg-[var(--color-quaternary-200)] active:bg-[var(--color-quaternary-200)] transition"
+        >
+          Dashboard
+        </a>
+        <a
+          href="convidados.html"
+          class="px-4 py-1 rounded-4xl hover:bg-[var(--color-quaternary-100)] hover:text-white active:bg-[var(--color-quaternary-200)] transition"
+        >
+          Convidados
+        </a>
+        <a
+          href="checkin.html"
+          class="px-4 py-1 rounded-4xl hover:bg-[var(--color-quaternary-100)] text-white bg-[var(--color-quaternary-200)] transition"
+        >
+          Check-in
+        </a>
+        <div class="flex items-end">
+          <button class="px-4 py-1 rounded-4xl hover:bg-[var(--color-quaternary-100)] hover:text-white active:bg-[var(--color-quaternary-200)] transition cursor-pointer" id="logoutButton">Sair</button>
+        </div>
+      </nav>
+
+
+
+      <!-- MENU MOBILE -->
+       <button id="burgermenu">
+      <img
+        src="/client/src/files/burgermenu.svg"
+        class="w-8 xl:hidden cursor-pointer"
+      />
+      </button>
+      </div>
+
+        <!-- MENU DROPDOWN -->
+  <div
+    id="navlinks"
+    class="hidden opacity-0 transition xl:hidden flex flex-col place-items-center absolute right-10 top-18 mt-2 w-54 bg-white rounded-2xl shadow-lg flex-col p-4"
+  >
+    <a href="dashboard.html" class="py-1 px-3 my-2 border-b border-amber-700/50 text-lg">Dashboard</a>
+    <a href="convidados.html" class="py-1 px-3 my-2 border-b border-amber-700/50 text-lg">Convidados</a>
+    <a href="checkin.html" class="py-1 px-3 my-2 text-white bg-[var(--color-quaternary-100)] active:bg-[var(--color-quaternary-200)] rounded-2xl text-lg">Check-in</a>
+    <button class="py-1 px-3 my-2  border-b border-amber-700/50 text-lg cursor-pointer" id="logoutButton">Sair</button>
+  </div>
+</header>
+
+<!-- CONTEÚDO -->
+<main class="mt-10 w-full flex flex-col place-items-center gap-6">
+
+  <div class="flex flex-col text-center">
+    <h1 class="text-6xl">Check-in</h1>
+    <p class="text-gray-600">
+      Busque convidados pelo nome ou CPF
+    </p>
+  </div>
+
+  <!-- BUSCA -->
+  <div class="flex flex-col w-95 place-items-center gap-4 mt-3">
+    <input
+      type="search"
+      id="busca"
+      placeholder="Digite o nome ou CPF..."
+      class="bg-[#fffbf7] w-full p-5 italic border border-black/30 focus:border-[var(--color-quaternary-200)] outline-none rounded-xl"
+    />
+  </div>
+
+  <!-- LISTA DE RESULTADOS -->
+  <div id="listaBusca" class="flex flex-col gap-4 w-full max-w-md"></div>
+
+</main>
+
+<!-- TEMPLATE FORA DO MAIN -->
+<template id="cardBusca">
+  <div class="flex items-center justify-between w-full h-20 px-4 border border-black/30 rounded-xl">
+
+    <div class="flex flex-col">
+      <p class="font-medium" id="nomePessoa">Nome pessoa</p>
+      <p class="text-sm text-gray-600">
+        Mesa <span id="mesa">0</span>
+      </p>
+    </div>
+
+    <button class="px-4 py-2 rounded-lg bg-[var(--color-quaternary-100)] cursor-pointer">
+      Check-in
+    </button>
+
+  </div>
+</template>
+
+    <script src="/client/api.js"></script>
+    <script src="/client/scripts/scriptcheckin.js"></script>
+  </body>
+</html>

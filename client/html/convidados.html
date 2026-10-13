@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Convidados</title>
+
+    <link rel="stylesheet" href="/client/style.css"  />
+    <link rel="shortcut icon" href="/client/src/files/favicon.ico" type="image/x-icon">
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Jost:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
+
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  </head>
+
+  <body class="px-4 md:px-10 bg-[var(--color-background)]">
+
+    <!-- HEADER -->
+    <header id="header"> 
+    <div class="flex items-center justify-between w-full p-4 border-b border-amber-700/50">
+      <img src="/client/src/img/logowedding.png" class="w-28 md:w-32" />
+
+      <!-- NAV -->
+      <nav class="hidden xl:flex gap-10 text-lg" id="nav">
+        <a
+          href="dashboard.html"
+          class="px-4 py-1 rounded-4xl hover:bg-[var(--color-quaternary-100)] hover:text-white active:bg-[var(--color-quaternary-200)] active:bg-[var(--color-quaternary-200)] transition"
+        >
+          Dashboard
+        </a>
+        <a
+          href="convidados.html"
+          class="px-4 py-1 rounded-4xl hover:bg-[var(--color-quaternary-100)] text-white bg-[var(--color-quaternary-200)] transition"
+        >
+          Convidados
+        </a>
+        <a
+          href="checkin.html"
+          class="px-4 py-1 rounded-4xl hover:bg-[var(--color-quaternary-100)] hover:text-white active:bg-[var(--color-quaternary-200)] transition"
+        >
+          Check-in
+        </a>
+        <div class="flex items-end">
+          <button class="px-4 py-1 rounded-4xl hover:bg-[var(--color-quaternary-100)] hover:text-white active:bg-[var(--color-quaternary-200)] cursor-pointer transition" id="logoutButton">Sair</button>
+        </div>
+      </nav>
+
+
+
+      <!-- MENU MOBILE -->
+       <button id="burgermenu">
+      <img
+        src="/client/src/files/burgermenu.svg"
+        class="w-8 xl:hidden cursor-pointer"
+      />
+      </button>
+      </div>
+
+        <!-- MENU DROPDOWN -->
+  <div
+    id="navlinks"
+    class="hidden opacity-0 transition xl:hidden flex flex-col place-items-center absolute right-10 top-18 mt-2 w-54 bg-white rounded-2xl shadow-lg flex-col p-4"
+  >
+    <a href="dashboard.html" class="py-1 px-3 my-2 border-b border-amber-700/50 text-lg">Dashboard</a>
+    <a href="convidados.html" class="py-1 px-3 my-2 text-white bg-[var(--color-quaternary-100)] active:bg-[var(--color-quaternary-200)] rounded-2xl text-lg">Convidados</a>
+    <a href="checkin.html" class="py-1 px-3 my-2  border-b border-amber-700/50 text-lg">Check-in</a>
+    <button class="py-1 px-3 my-2  border-b border-amber-700/50 text-lg cursor-pointer" id="logoutButton">Sair</button>
+  </div>
+</header>
+
+    <!-- CONTEÚDO -->
+    <main class="mt-8 flex flex-col gap-6" id="background">
+
+      <div>
+        <h1 class="text-4xl md:text-5xl">Convidados</h1>
+        <p class="text-gray-600 md:text-md md:ml-1">
+          <span id="registrados">0</span> Convidados cadastrados
+        </p>
+      </div>
+
+      <!-- BUSCA + BOTÃO -->
+      <div class="flex flex-col md:flex-row md:items-center gap-4">
+
+        <input
+          type="search"
+          id="busca"
+          placeholder="Buscar por Nome ou CPF..."
+          class="bg-[#fffbf7] w-full md:flex-1 p-3 italic border-1 border-black/15 focus:border-[var(--color-quaternary-200)] outline-none rounded-xl"
+        />
+
+        <button
+          onclick="cadastrarNovo()"
+          class="w-full md:w-auto px-6 py-3 rounded-xl bg-[var(--color-quaternary-100)] active:bg-[var(--color-quaternary-200)] hover:scale-105 text-white transition cursor-pointer"
+        >
+          + Novo Convidado
+        </button>
+
+      </div>
+
+      <!-- CARD -->
+
+<div id="lista" class="flex flex-col gap-4">
+  <p class="text-center text-gray-500 italic">Carregando convidados...</p>
+</div>
+
+
+    </main>
+
+ <!-- POP-UP -->
+  
+  <div class="hidden fixed inset-0 flex items-center justify-center bg-black/30 z-50" id="popupCadastro">
+<button id="fechar" class="absolute top-4 right-6 text-xl font-bold text-red-600 cursor-pointer">
+  X
+</button>
+      <form
+        action=""
+        method="post"
+        class="flex flex-col w-full max-w-md px-6 md:px-10 lg:px-12 py-10 rounded-xl bg-white shadow-[var(--shadow-form)]"
+      >
+        <!-- HEADING -->
+
+        <h1 class="flex justify-center mb-10 px-4 text-3xl md:text-4xl lg:text-5xl">Novo Convidado</h1>
+
+        <!-- NOME -->
+
+        <label
+          for="name"
+          class="text-sm uppercase tracking-widest text-gray-500"
+          >Nome</label
+        >
+        <input
+          type="text"
+          id="name"
+          name="name"
+          class="w-full py-1.5 mb-10 mt-5 border-[var(--color-secondary)] outline-none border-b-2"
+          placeholder="Digite o nome..."
+        />
+
+        <!-- CPF -->
+
+        <label
+          for="cpf"
+          class="text-sm uppercase tracking-widest text-gray-500"
+          >CPF</label
+        >
+        <input
+          type="text"
+          id="cpf"
+          name="cpf"
+          class="w-full py-1.5 mb-10 mt-5 border-[var(--color-secondary)] border-b-2 outline-none"
+          placeholder="Digite o CPF..."
+        />
+
+        <!-- EMAIL -->
+
+        <label
+          for="email"
+          class="text-sm uppercase tracking-widest text-gray-500"
+          >EMAIL</label
+        >
+        <input
+          type="email"
+          id="email"
+          name="email"
+          class="w-full py-1.5 mb-10 mt-5 border-[var(--color-secondary)] border-b-2 outline-none"
+          placeholder="Digite o Email..."
+        />
+
+        <!-- MESA -->
+
+        <label
+          for="mesa"
+          class="text-sm uppercase tracking-widest text-gray-500"
+          >MESA</label
+        >
+        <input
+          type="number"
+          id="mesa"
+          name="mesa"
+          class="w-full py-1.5 mb-10 mt-5 border-[var(--color-secondary)] border-b-2 outline-none"
+          placeholder="Digite o número da mesa..."
+        />
+
+        <!-- BOTAO -->
+
+        <button
+          type="button" onclick="cadastrarUsuario()"
+          class="px-6 py-3 text-xl bg-[var(--color-secondary)] rounded-2xl text-white hover:shadow-lg hover:shadow-amber-700/30 hover:scale-105 transition-all duration-300 ease-in-out cursor-pointer"
+        >
+          Cadastrar
+        </button>
+      </form>
+    </div>
+        <script src="/client/api.js"></script>
+        <script src="/client/scripts/scriptconvidados.js"></script>
+  </body>
+</html>
